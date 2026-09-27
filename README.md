@@ -4,6 +4,32 @@ Uma nova base em **Godot 4.7.2 / GDScript** para o RutherFox, da Arcade Age. Pro
 
 Gânia é uma raposa azul e radioativa. Nesta primeira missão, explore três setores, encontre as peças de um dispositivo e monte-o sem ser capturada.
 
+## Imagens do jogo
+
+Capturas do protótipo rodando no Godot 4.7.2. Os cenários usam as artes originais fornecidas; os personagens ainda são provisórios.
+
+### Menu inicial
+
+![Menu inicial do RutherFox: Protocolo Azul, com botão para iniciar a missão](docs/menu.png)
+
+### Laboratório de pesquisa
+
+Gânia explora o primeiro setor enquanto evita o campo de visão do guarda.
+
+![Gânia no laboratório de pesquisa, com bancadas, gaiola, peça coletável e guarda patrulhando](docs/gameplay.png)
+
+### Depósito de materiais
+
+Caixas e barris formam obstáculos para a exploração e a furtividade.
+
+![Depósito com caixas, barris, uma peça coletável e o cone de visão do guarda](docs/storage.png)
+
+### Laboratório nuclear
+
+O setor final abriga o terminal de montagem do dispositivo.
+
+![Laboratório nuclear com câmara de contenção, computadores e terminal de montagem](docs/lab2.png)
+
 ## Abrir e jogar
 
 **Neste computador:** dê dois cliques em `Jogar.cmd`. Ele usa o Godot portátil baixado na pasta de trabalho desta entrega. Se mover o repositório para outro lugar, siga os passos abaixo ou configure `GODOT_BIN`.
