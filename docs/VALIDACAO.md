@@ -10,4 +10,4 @@ O ambiente restrito emitiu um aviso ao ler o repositório de certificados do Win
 
 Os 33 PNGs originais foram comparados byte a byte com os ZIPs e tiveram sua integridade confirmada. O inventário registra dimensões e SHA-256.
 
-GitHub: não publicado; autenticação local do GitHub CLI estava inválida. Repositório Git local preparado sem vinculação remota.
+GitHub: publicado como público em https://github.com/SouBeatrizKaroline/Game_RutherFox, branch main, com autoria dos commits vinculada à conta SouBeatrizKaroline.

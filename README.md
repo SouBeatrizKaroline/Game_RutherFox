@@ -84,4 +84,4 @@ Referências, créditos e classificação dos materiais: [docs/REFERENCIAS.md](d
 
 ## Direitos e créditos
 
-RutherFox e artes originais: Arcade Age e respectivos autores. Créditos confirmados na página do projeto estão nas referências. Não foi encontrada uma licença de redistribuição nos ZIPs: nenhuma licença aberta foi atribuída às artes. Antes de publicar os materiais, confirme as permissões com seus autores. O repositório permanece local nesta entrega.
+RutherFox e artes originais: Arcade Age e respectivos autores. Créditos confirmados na página do projeto estão nas referências. Não foi encontrada uma licença de redistribuição nos ZIPs: nenhuma licença aberta foi atribuída às artes. Antes de publicar os materiais, confirme as permissões com seus autores. Repositório público: https://github.com/SouBeatrizKaroline/Game_RutherFox.
