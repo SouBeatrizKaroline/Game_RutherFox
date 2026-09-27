@@ -282,9 +282,14 @@ func _panel(eyebrow: String, title: String, description: String) -> void:
 	overlay.add_child(card)
 	_label(overlay,eyebrow,Vector2(420,195),13,MINT)
 	_label(overlay,title,Vector2(420,245),30,Color("eef8ff"))
-	var description_label := _label(overlay,description,Vector2(420,350),17,Color("b8cbd9"))
+	var description_label := Label.new()
 	description_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	description_label.position = Vector2(420,350)
 	description_label.size = Vector2(440,90)
+	description_label.add_theme_font_size_override("font_size",17)
+	description_label.add_theme_color_override("font_color",Color("b8cbd9"))
+	description_label.text = description
+	overlay.add_child(description_label)
 
 func _clear_overlay() -> void:
 	overlay_buttons.clear()
