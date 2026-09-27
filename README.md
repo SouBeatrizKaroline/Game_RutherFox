@@ -1,6 +1,6 @@
 # Game_RutherFox
 
-Uma nova base em **Godot 4.4.1+ / GDScript** para o RutherFox, da Arcade Age. Protótipo de aventura e furtividade 2D com visão de cima, para computador.
+Uma nova base em **Godot 4.7.2 / GDScript** para o RutherFox, da Arcade Age. Protótipo de aventura e furtividade 2D com visão de cima, para computador.
 
 Gânia é uma raposa azul e radioativa. Nesta primeira missão, explore três setores, encontre as peças de um dispositivo e monte-o sem ser capturada.
 
@@ -8,7 +8,7 @@ Gânia é uma raposa azul e radioativa. Nesta primeira missão, explore três se
 
 **Neste computador:** dê dois cliques em `Jogar.cmd`. Ele usa o Godot portátil baixado na pasta de trabalho desta entrega. Se mover o repositório para outro lugar, siga os passos abaixo ou configure `GODOT_BIN`.
 
-1. Instale ou abra a versão padrão do [Godot 4](https://godotengine.org/download/windows/) (não precisa de .NET).
+1. Instale ou abra a versão padrão do [Godot 4.7.2](https://godotengine.org/download/windows/) (não precisa de .NET).
 2. Importe `project.godot` nesta pasta.
 3. Aguarde a importação das imagens e pressione **F6** com `scenes/main.tscn` aberta, ou **F5** para executar o projeto.
 
@@ -56,7 +56,7 @@ docs/                   referências, decisões e inventário
 
 ## Desenvolvimento
 
-Compatibilidade validada no Godot **4.4.1**, renderizador Compatibility. Não usa pacotes externos nem serviços online.
+Compatibilidade validada no Godot **4.7.2**, renderizador Compatibility. Não usa pacotes externos nem serviços online.
 
 ```powershell
 godot --headless --path . --editor --import

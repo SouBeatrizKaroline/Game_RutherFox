@@ -35,7 +35,7 @@ As imagens foram preservadas byte a byte. As cópias em `assets/runtime` têm la
 
 ## Decisão de engine
 
-Godot 4 com GDScript mantém a origem do projeto, permite cenas 2D, colisão física e evolução para animações sem dependências externas. A base foi fixada em 4.4.1 para teste reproduzível, sem presumir que seja a versão mais recente. Ver [visão geral oficial](https://docs.godotengine.org/en/stable/getting_started/introduction/introduction_to_godot.html).
+Godot 4 com GDScript mantém a origem do projeto, permite cenas 2D, colisão física e evolução para animações sem dependências externas. A base inicial usava 4.4.1 e foi atualizada para 4.7.2, versão estável mais recente confirmada no site oficial em 27/09/2026. Ver [visão geral oficial](https://docs.godotengine.org/en/stable/getting_started/introduction/introduction_to_godot.html).
 
 Dados de sala foram separados da lógica. O jogador, os guardas e os interativos são componentes distintos. Para esta etapa, as salas são montadas a partir de JSON; migrar o layout para cenas `.tscn` é uma melhoria futura para edição visual por artistas.
 
