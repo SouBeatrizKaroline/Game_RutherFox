@@ -230,7 +230,7 @@ func _win() -> void:
 func _show_menu() -> void:
 	state = State.MENU
 	_enable_world(false)
-	_panel("ARCADE AGE  /  NOVA BASE JOGÁVEL", "RUTHERFOX", "Gânia perdeu seu lar. Agora, precisa escapar do laboratório.\nRecupere três peças sem ser vista e monte seu dispositivo.")
+	_panel("ARCADE AGE  /  NOVA BASE JOGÁVEL", "RUTHERFOX", "Ajude Gânia a escapar do laboratório.\nRecupere três peças sem ser vista e monte o dispositivo.")
 	_label(overlay,"P R O T O C O L O   A Z U L",Vector2(420,302),22,MINT)
 	_button(overlay,"Iniciar missão  →",Vector2(420,451),Vector2(440,54),start_new)
 	if not _read_save().is_empty():
