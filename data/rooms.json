@@ -1,0 +1,48 @@
+{
+  "lab1": {
+    "title": "Laboratório de pesquisa", "subtitle": "SETOR 01 / CONTENÇÃO", "background": "lab1/Background.png",
+    "props": [
+      {"asset":"lab1/Table1.png","rect":[110,76,400,104],"solid":[110,118,400,56]},
+      {"asset":"lab1/Table2.png","rect":[590,76,410,104],"solid":[590,118,410,56]},
+      {"asset":"lab1/Table3.png","rect":[430,270,270,122],"solid":[430,282,270,90]},
+      {"asset":"lab1/Cage1.png","rect":[125,430,112,112],"solid":[130,466,101,63]},
+      {"asset":"lab1/Table4.png","rect":[910,305,96,154],"solid":[914,322,85,120]}
+    ],
+    "guards": [[[760,215],[760,460],[320,460],[320,215]]],
+    "items": [
+      {"id":"coil","title":"Coletar bobina de indução","kind":"part","at":[566,228]},
+      {"id":"to_storage","title":"Entrar no depósito","kind":"door","at":[1115,480],"destination":"storage"}
+    ]
+  },
+  "storage": {
+    "title": "Depósito de materiais", "subtitle": "SETOR 02 / SUPRIMENTOS", "background": "storage/Background.png",
+    "props": [
+      {"asset":"storage/BioBarrel1.png","rect":[120,90,68,95],"solid":[120,140,68,40]},
+      {"asset":"storage/BioBarrel2.png","rect":[190,90,68,95],"solid":[190,140,68,40]},
+      {"asset":"storage/Box1.png","rect":[420,285,150,115],"solid":[420,310,150,83]},
+      {"asset":"storage/Box2.png","rect":[700,120,150,115],"solid":[700,145,150,83]},
+      {"asset":"storage/Barrel1.png","rect":[865,345,62,87],"solid":[865,380,62,45]},
+      {"asset":"storage/Box3.png","rect":[275,475,130,100],"solid":[275,500,130,70]}
+    ],
+    "guards": [[[645,270],[990,270],[990,490],[645,490]]],
+    "items": [
+      {"id":"cell","title":"Coletar célula de energia","kind":"part","at":[590,425]},
+      {"id":"to_lab1","title":"Voltar à pesquisa","kind":"door","at":[75,480],"destination":"lab1"},
+      {"id":"to_lab2","title":"Entrar no laboratório nuclear","kind":"door","at":[1115,480],"destination":"lab2"}
+    ]
+  },
+  "lab2": {
+    "title": "Laboratório nuclear", "subtitle": "SETOR 03 / PROTOCOLO AZUL", "background": "lab2/Background.png",
+    "props": [
+      {"asset":"lab2/PC.png","rect":[780,125,265,139],"solid":[780,165,265,88]},
+      {"asset":"lab2/Chair1.png","rect":[815,260,40,82],"solid":[815,291,40,39]},
+      {"asset":"lab2/Chair2.png","rect":[975,260,40,82],"solid":[975,291,40,39]}
+    ],
+    "guards": [[[630,320],[1070,320],[1070,505],[630,505]]],
+    "items": [
+      {"id":"chip","title":"Coletar módulo de controle","kind":"part","at":[490,310]},
+      {"id":"to_storage","title":"Voltar ao depósito","kind":"door","at":[75,480],"destination":"storage"},
+      {"id":"device","title":"Montar o dispositivo","kind":"terminal","at":[900,380]}
+    ]
+  }
+}
