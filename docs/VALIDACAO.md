@@ -32,3 +32,11 @@ GitHub: publicado como público em https://github.com/SouBeatrizKaroline/Game_Ru
 - Dados temporários isolados do progresso real. O ambiente emite erro de leitura dos certificados do Windows, sem falhas no jogo offline.
 - A migração de 4.4.1 não foi repetida nesta etapa. O teste específico de migração depende de fixture criada pela engine anterior; a persistência da versão atual passou no teste da missão.
 - Novas artes e efeitos sintetizados em código. Ainda é necessária validação artística da equipe e uma sessão de balanceamento com jogadores.
+
+## Correção de abertura e distribuição — 30/09/2026
+
+O atalho anterior dependia de um Godot fora da pasta distribuída. Na ausência dele, só exibia instruções e fechava após pressionar uma tecla. A distribuição foi corrigida com exportação nativa Windows x86_64 e PCK embutido em RutherFox.exe. Não requer o editor instalado. O preset exclui testes/documentação/ferramentas e inclui explicitamente os dados JSON de salas.
+
+O atalho do código-fonte procura o executável exportado antes de preparar o projeto. O inicializador do fonte pode obter Godot oficial 4.7.2 com SHA-256 fixado, importa recursos e preserva erros em logs. Validado em cópia sem cache e em caminho contendo espaços.
+
+Executável release testado em pasta contendo apenas o jogo e os avisos de licença, sem project.godot nem editor. Abertura headless concluída e três quadros do menu renderizados pelo executável em OpenGL/Compatibility e revisados visualmente. Não houve erro de script. O template release não executa o modo de testes externos --script do editor; as 25 verificações são do projeto-fonte, não uma repetição dentro da release. O ambiente restrito emitiu erros de cache de shaders/certificados, mas o menu foi renderizado corretamente.

@@ -1,19 +1,19 @@
 @echo off
 setlocal
 cd /d "%~dp0"
-if defined GODOT_BIN (
-  "%GODOT_BIN%" --path "%~dp0."
+if exist "%~dp0RutherFox.exe" (
+  start "RutherFox" "%~dp0RutherFox.exe"
   exit /b
 )
-if exist "%~dp0..\godot\Godot_v4.7.2-stable_win64.exe" (
-  start "RutherFox" "%~dp0..\godot\Godot_v4.7.2-stable_win64.exe" --path "%~dp0."
+if exist "%~dp0builds\RutherFox.exe" (
+  start "RutherFox" "%~dp0builds\RutherFox.exe"
   exit /b
 )
-where godot >nul 2>nul
-if not errorlevel 1 (
-  godot --path "%~dp0."
-  exit /b
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0tools\launch.ps1"
+if errorlevel 1 (
+  echo.
+  echo Nao foi possivel abrir o jogo. A mensagem acima explica o problema.
+  echo Os detalhes estao na pasta .runtime\logs ao lado de Jogar.cmd.
+  pause
 )
-echo Abra project.godot no Godot 4.7.2 e pressione F5.
-echo Voce tambem pode definir GODOT_BIN com o caminho do executavel do Godot.
-pause
+

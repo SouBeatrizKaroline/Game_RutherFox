@@ -32,13 +32,11 @@ O setor final abriga o terminal de montagem do dispositivo.
 
 ## Abrir e jogar
 
-**Neste computador:** dê dois cliques em `Jogar.cmd`. Ele usa o Godot portátil baixado na pasta de trabalho desta entrega. Se mover o repositório para outro lugar, siga os passos abaixo ou configure `GODOT_BIN`.
+**Para jogar:** use o pacote de Windows exportado, extraia todo o ZIP e dê dois cliques em `RutherFox.exe`. O executável contém os dados do jogo e não precisa instalar Godot nem acessar a internet.
 
-1. Instale ou abra a versão padrão do [Godot 4.7.2](https://godotengine.org/download/windows/) (não precisa de .NET).
-2. Importe `project.godot` nesta pasta.
-3. Aguarde a importação das imagens e pressione **F6** com `scenes/main.tscn` aberta, ou **F5** para executar o projeto.
+**Código-fonte deste repositório:** `Jogar.cmd` abre primeiro um executável exportado, se existir ao lado dele ou em `builds/`. Caso contrário, `tools/launch.ps1` prepara o projeto usando Godot local ou baixa automaticamente a versão oficial 4.7.2 na primeira abertura, verificando SHA-256. Importa os recursos antes de iniciar, guarda logs em `.runtime/logs` e mantém o aviso na tela quando ocorre um erro. Essa opção é para executar o projeto-fonte, diferente do pacote independente.
 
-As imagens leves já estão incluídas. Os arquivos originais não são necessários para rodar.
+**Para editar:** importe `project.godot` no Godot 4.7.2 e pressione F5. Para gerar o executável, instale os templates oficiais dessa versão e exporte com o preset **Windows Desktop** de `export_presets.cfg`. O preset usa Windows x86_64 com o pacote de dados embutido, sem o editor; usa `data/*.json` e exclui documentação, testes e ferramentas do jogo exportado.
 
 | Ação | Controle |
 |---|---|
@@ -116,3 +114,4 @@ Referências, créditos e classificação dos materiais: [docs/REFERENCIAS.md](d
 ## Direitos e créditos
 
 RutherFox e artes originais: Arcade Age e respectivos autores. Créditos confirmados na página do projeto estão nas referências. Não foi encontrada uma licença de redistribuição nos ZIPs: nenhuma licença aberta foi atribuída às artes. Antes de publicar os materiais, confirme as permissões com seus autores. Repositório público: https://github.com/SouBeatrizKaroline/Game_RutherFox.
+
