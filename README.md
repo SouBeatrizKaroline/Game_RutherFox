@@ -1,98 +1,201 @@
-# Game_RutherFox
+<div align="center">
 
-Uma nova base em **Godot 4.7.2 / GDScript** para o RutherFox, da Arcade Age. Protótipo de aventura e furtividade 2D com visão de cima, para computador.
+# RUTHERFOX
+### Uma raposa. Um laboratório. Uma escolha que pode mudar tudo.
 
-Gânia é uma raposa azul e radioativa. Nesta primeira missão, explore três setores, encontre as peças de um dispositivo e monte-o sem ser capturada.
+**Aventura e furtividade 2D • Exploração • Ficção científica**
 
-## Baixar e jogar
+[![Jogar no Windows](https://img.shields.io/badge/BAIXAR_E_JOGAR-Windows_64_bits-68e8e1?style=for-the-badge&labelColor=10212f)](https://github.com/SouBeatrizKaroline/Game_RutherFox/releases/download/v0.2.1/RutherFox-Windows.zip)
+[![Versão](https://img.shields.io/badge/versão-v0.2.1-30505e?style=flat-square)](https://github.com/SouBeatrizKaroline/Game_RutherFox/releases/tag/v0.2.1)
+![Estágio](https://img.shields.io/badge/estágio-protótipo_jogável-30505e?style=flat-square)
+![Godot](https://img.shields.io/badge/Godot-4.7.2-478cbf?style=flat-square)
 
-**[Baixar RutherFox para Windows 64 bits]( https://github.com/SouBeatrizKaroline/Game_RutherFox/releases/download/v0.2.1/RutherFox-Windows.zip )**
+**Observe. Distraia. Avance sem ser vista.**
 
-Extraia todo o ZIP e abra **RutherFox.exe**. Não precisa instalar Godot; o jogo funciona sem internet.
+![RutherFox — Gânia no laboratório de pesquisa](docs/gameplay.png)
 
-[Ver versão v0.2.1 e arquivos publicados](https://github.com/SouBeatrizKaroline/Game_RutherFox/releases/tag/v0.2.1).
+</div>
 
-## Imagens do jogo
+<p align="center">
+  <a href="#a-história">História</a> •
+  <a href="#jogue-agora">Download</a> •
+  <a href="#a-experiência">Gameplay</a> •
+  <a href="#para-parceiros-investidores-e-empresas">Parcerias</a> •
+  <a href="#base-técnica">Tecnologia</a>
+</p>
 
-Capturas do protótipo rodando no Godot 4.7.2. Os cenários usam as artes originais fornecidas; Gânia, guardas e cientistas usam arte vetorial animada criada para esta reconstrução.
+---
 
-### Menu inicial
+## A história
 
-![Menu inicial do RutherFox: Protocolo Azul, com botão para iniciar a missão](docs/menu.png)
+Uma explosão destruiu o lar de **Gânia**, levou aqueles que ela amava e a deixou azul e radioativa. Agora, ela quer transformar os responsáveis em raposas.
 
-### Laboratório de pesquisa
+Dentro de um laboratório, cada corredor exige atenção: uma patrulha pode perceber sua presença, uma bancada pode esconder sua passagem e um ruído pode abrir a oportunidade de avançar.
 
-Gânia explora o primeiro setor enquanto evita o campo de visão do guarda.
+**RutherFox coloca a furtividade a serviço de uma pergunta: até onde vale ir por vingança?**
 
-![Gânia no laboratório de pesquisa, com bancadas, gaiola, peça coletável e guarda patrulhando](docs/gameplay.png)
+Este repositório apresenta uma reconstrução jogável do projeto da **Arcade Age**, baseada nas referências e nos cenários originais disponíveis. **Protocolo Azul** é o subtítulo provisório desta versão.
 
-### Depósito de materiais
+## Jogue agora
 
-Caixas e barris formam obstáculos para a exploração e a furtividade.
+### Windows 64 bits • Sem instalação do Godot • Jogo offline
 
-![Depósito com caixas, barris, uma peça coletável e o cone de visão do guarda](docs/storage.png)
+**[⬇ Baixar RutherFox v0.2.1 para Windows](https://github.com/SouBeatrizKaroline/Game_RutherFox/releases/download/v0.2.1/RutherFox-Windows.zip)**
 
-### Laboratório nuclear
+1. Baixe o pacote **RutherFox-Windows.zip**.
+2. Extraia todo o ZIP para uma pasta.
+3. Abra **RutherFox.exe** e selecione **Iniciar missão**.
 
-O setor final abriga o terminal de montagem do dispositivo.
+O executável já contém os arquivos do jogo. A internet é necessária apenas para baixar o pacote.
 
-![Laboratório nuclear com câmara de contenção, computadores e terminal de montagem](docs/lab2.png)
+[Notas da versão e arquivos publicados →](https://github.com/SouBeatrizKaroline/Game_RutherFox/releases/tag/v0.2.1)
 
-## Abrir e jogar
+> **Versão de demonstração:** a experiência atual é um protótipo jogável com uma missão em três setores. Conteúdo, direção de arte e balanceamento seguem em desenvolvimento. Requisitos mínimos de hardware ainda não foram definidos por uma matriz de testes.
 
-**Para jogar:** [baixe o pacote para Windows](https://github.com/SouBeatrizKaroline/Game_RutherFox/releases/download/v0.2.1/RutherFox-Windows.zip), extraia todo o ZIP e dê dois cliques em `RutherFox.exe`. O executável contém os dados do jogo e não precisa instalar Godot nem acessar a internet.
+## A experiência
 
-**Código-fonte deste repositório:** `Jogar.cmd` abre primeiro um executável exportado, se existir ao lado dele ou em `builds/`. Caso contrário, `tools/launch.ps1` prepara o projeto usando Godot local ou baixa automaticamente a versão oficial 4.7.2 na primeira abertura, verificando SHA-256. Importa os recursos antes de iniciar, guarda logs em `.runtime/logs` e mantém o aviso na tela quando ocorre um erro. Essa opção é para executar o projeto-fonte, diferente do pacote independente.
+**Explore o laboratório, recupere três componentes e ative o Protocolo Azul.** Para chegar ao terminal, você precisa combinar observação, cobertura e distração.
 
-**Para editar:** importe `project.godot` no Godot 4.7.2 e pressione F5. Para gerar o executável, instale os templates oficiais dessa versão e exporte com o preset **Windows Desktop** de `export_presets.cfg`. O preset usa Windows x86_64 com o pacote de dados embutido, sem o editor; usa `data/*.json` e exclui documentação, testes e ferramentas do jogo exportado.
+| Recurso | O que você encontra no jogo |
+| :--- | :--- |
+| **Furtividade com leitura visual** | Cones de visão e barra de alerta ajudam a reconhecer o risco. Móveis bloqueiam o movimento e a visão. |
+| **Patrulhas reativas** | Guardas perseguem Gânia, investigam ruídos, procuram na última posição vista e retornam à rota. |
+| **Distração por ruído** | Lance um ruído na direção do mouse e aproveite a investigação para mudar de posição. |
+| **Três setores conectados** | Pesquisa, depósito e laboratório nuclear compõem a missão atual. |
+| **Personagens animados** | Gânia tem repouso, movimento, orientação e postura furtiva; guardas e cientista também são animados. |
+| **Progressão e desfecho** | Reúna os componentes, ative o dispositivo e acompanhe o pulso de transformação. |
+| **Retomada de progresso** | Sala e peças coletadas são salvas localmente. As peças são mantidas após uma captura. |
+
+### Seu caminho pelo laboratório
+
+<table>
+<tr>
+<td width="50%" align="center">
+
+**01 · Laboratório de pesquisa**
+
+Encontre a bobina e aprenda a usar a cobertura.
+
+<img src="docs/gameplay.png" alt="Gânia no laboratório de pesquisa" width="100%">
+
+</td>
+<td width="50%" align="center">
+
+**02 · Depósito de materiais**
+
+Recupere a célula entre caixas, barris e patrulhas.
+
+<img src="docs/storage.png" alt="Depósito de materiais com obstáculos e patrulha" width="100%">
+
+</td>
+</tr>
+<tr>
+<td width="50%" align="center">
+
+**03 · Laboratório nuclear**
+
+Encontre o módulo e alcance o terminal.
+
+<img src="docs/lab2.png" alt="Laboratório nuclear com cientista e terminal" width="100%">
+
+</td>
+<td width="50%" align="center">
+
+**Uma missão pronta para experimentar**
+
+Inicie uma partida ou retome as peças recuperadas.
+
+<img src="docs/menu.png" alt="Menu inicial de RutherFox" width="100%">
+
+</td>
+</tr>
+</table>
+
+### Controles
 
 | Ação | Controle |
-|---|---|
-| Mover | WASD ou setas |
-| Andar devagar / reduzir distância de detecção | Shift |
-| Interagir | E, ou clique no objeto quando estiver perto |
-| Distrair patrulha com ruído na direção do mouse | F (recarga de 5 s; alcance de 180 px) |
-| Pausar / continuar | Esc |
-| Reposicionar na entrada da sala | R |
+| :--- | :--- |
+| Mover | **WASD** ou **setas** |
+| Andar devagar e reduzir o alcance de detecção | **Shift** |
+| Interagir | **E** ou **clique** no objeto próximo |
+| Distrair com ruído | **F** — alcance de 180 px e recarga de 5 s |
+| Pausar / continuar | **Esc** |
+| Reposicionar na entrada do setor | **R** |
 
-**Objetivo:** recuperar a bobina na pesquisa, a célula no depósito e o módulo no laboratório nuclear; depois ativar o terminal nuclear. Os cones indicam o campo de visão. Móveis bloqueiam a visão e o movimento. A barra de alerta sobe enquanto Gânia é vista e diminui quando ela sai de vista. Ao ser capturada, as peças recuperadas são mantidas.
+**Dica:** sair do campo de visão reduz o alerta. Use os móveis como cobertura e mova-se enquanto a patrulha investiga uma distração.
 
-O progresso é salvo localmente ao coletar peças e trocar de sala. **Continuar progresso** retoma a sala e as peças; **Iniciar missão** começa um novo progresso. Posição e estado da patrulha não são salvos.
+O progresso registra **sala e peças**, sem salvar posição exata ou estado da patrulha. **Iniciar missão** reinicia o progresso; **Continuar progresso** retoma o que foi recuperado.
 
-## O que já funciona
+---
 
-- Menu, pausa, captura, tentativa novamente e conclusão.
-- Três salas conectadas usando as artes fornecidas.
-- Movimento diagonal normalizado, colisões e caminhada lenta.
-- Patrulha, cone de visão, obstrução por móveis e medidor de detecção.
-- Interação por proximidade, inventário de três peças e terminal condicionado à coleta.
-- Progresso local versionado e validado antes de carregar.
-- Personagens animados, cientista no setor nuclear e transformação após ativação.
-- Distração por ruído com recarga, busca ativa e cones recortados pelos móveis.
-- Efeitos sonoros de coleta, distração e pulso sintetizados localmente.
-- Testes de integração das regras da missão e das novas mecânicas.
+## Para parceiros, investidores e empresas
 
-## Organização
+**Uma personagem central reconhecível, uma premissa de transformação e um ciclo de furtividade já demonstrável.** RutherFox reúne esses elementos em uma base que pode ser avaliada diretamente: baixar, jogar e examinar a implementação.
 
-```text
-assets/
-  concepts/             desenhos de referência originais
-  lab1/, lab2/, storage/ PNG originais intactos; ignorados pelo importador
-  runtime/              cópias leves utilizadas pelo jogo
-data/rooms.json         cenários, objetos, colisões, patrulhas e interações
-scenes/main.tscn        cena de entrada
-scripts/main.gd         sessão, progressão e interface
-scripts/player.gd       movimento, furtividade e recarga
-scripts/guard.gd        patrulha, perseguição, investigação e busca
-scripts/interactable.gd indicadores de interação
-tools/prepare_assets.gd preparação reproduzível das imagens
-tests/                  validação e captura de prévias
-docs/                   referências, decisões e inventário
-```
+| Eixo do projeto | Base disponível para avaliação |
+| :--- | :--- |
+| **Identidade** | Gânia, a raposa azul radioativa, conecta o visual à premissa narrativa. |
+| **Proposta de experiência** | Exploração e tensão de furtividade com controles acessíveis e resposta visual ao perigo. |
+| **Material demonstrável** | Executável para Windows, três setores, missão com conclusão e capturas reais do jogo. |
+| **Continuidade de produção** | Componentes separados para jogador, patrulhas e interações; dados de sala externos à lógica. |
 
-## Desenvolvimento
+### Direção de evolução
 
-Compatibilidade validada no Godot **4.7.2**, renderizador Compatibility. Não usa pacotes externos nem serviços online.
+As próximas frentes propostas concentram-se em aprofundar a experiência e preparar uma avaliação mais ampla:
+
+- **Arte e identidade:** revisar personagens com a equipe, refinar animações e harmonizar a apresentação visual.
+- **Narrativa e áudio:** desenvolver diálogos, trilha e sequências narrativas.
+- **Gameplay:** aprimorar navegação das patrulhas, calibrar detecção e conduzir sessões de teste com jogadores.
+- **Produção:** tornar salas mais fáceis de editar, revisar interface e definir requisitos de hardware.
+
+Essas frentes são **direções de desenvolvimento**, sem datas ou compromissos de entrega anunciados. O repositório não apresenta métricas comerciais, orçamento, projeções de receita ou validação de mercado.
+
+**Para iniciar uma conversa sobre colaboração, avaliação ou parceria:** [perfil de Beatriz Karoline no GitHub](https://github.com/SouBeatrizKaroline). Para sugestões e relatos de problemas, use as [Issues do projeto](https://github.com/SouBeatrizKaroline/Game_RutherFox/issues).
+
+## Base técnica
+
+| Item | Implementação atual |
+| :--- | :--- |
+| Engine e linguagem | **Godot 4.7.2 / GDScript** |
+| Perspectiva | 2D com visão de cima |
+| Renderização | **Compatibility / OpenGL** |
+| Distribuição publicada | **Windows x86_64**, executável release com dados embutidos |
+| Estrutura de salas | Layouts e objetos em **JSON** |
+| Movimento | Movimento diagonal normalizado, colisões físicas e caminhada furtiva |
+| IA | Patrulha, investigação, perseguição, busca temporizada e retorno |
+| Percepção | Cone de visão, alcance variável e consulta física de linha de visão |
+| Animação e áudio | Arte vetorial animada em código e efeitos sonoros sintetizados |
+| Persistência | Progresso local versionado e validado |
+| Serviços | Jogo offline, sem serviços online ou pacotes externos |
+
+### Qualidade e estágio atual
+
+**25 verificações aprovadas no projeto-fonte:** 16 sobre o fluxo da missão e 9 sobre personagens e IA. Cobrem movimento, colisões, coleta, captura, transições, persistência, investigação, recarga, pausa e transformação.
+
+A versão exportada foi aberta separadamente do editor e do projeto-fonte; o menu foi renderizado e inspecionado. O pacote publicado foi baixado novamente e comparado ao arquivo testado.
+
+**Limitações relevantes para avaliação:**
+
+- Guardas respeitam colisões, mas ainda não calculam caminhos completos ao redor de todos os obstáculos.
+- Há uma patrulha por sala; o laboratório nuclear apresenta um cientista.
+- Diálogos completos, trilha sonora e controles de toque ainda não estão implementados.
+- As novas artes de personagens e o desfecho são interpretações desta reconstrução; não reproduzem sprites ou a cutscene original.
+- Os testes automatizados não substituem testes de usabilidade, balanceamento e compatibilidade em outros computadores.
+
+[Relatório de validação →](docs/VALIDACAO.md) · [Referências e decisões →](docs/REFERENCIAS.md) · [Inventário de recursos →](docs/ASSETS.csv)
+
+<details>
+<summary><strong>Desenvolvimento · abrir, testar e exportar</strong></summary>
+
+### Abrir o projeto-fonte
+
+Importe `project.godot` no **Godot 4.7.2** e pressione **F5**.
+
+O `Jogar.cmd` do repositório procura um executável exportado ao lado dele ou em `builds/`. Se não encontrar, `tools/launch.ps1` usa Godot local ou baixa a versão oficial na primeira execução, verifica SHA-256, importa os recursos e registra erros em `.runtime/logs`.
+
+**Para jogadores, prefira o pacote da Release:** ele abre diretamente sem instalar o editor.
+
+### Executar verificações
 
 ```powershell
 godot --headless --path . --editor --import
@@ -100,26 +203,75 @@ godot --headless --path . --script tests/smoke.gd
 godot --headless --path . --script tests/characters_ai.gd
 ```
 
-Para regenerar as imagens leves, mantendo os originais:
+Use um diretório temporário de `APPDATA` ao testar para isolar dados do jogador. O teste da missão desativa a gravação do progresso normal.
+
+### Exportar para Windows
+
+Instale os templates oficiais de exportação do Godot 4.7.2 e use o preset **Windows Desktop** de `export_presets.cfg`.
+
+```powershell
+godot --headless --path . --export-release "Windows Desktop" builds/RutherFox.exe
+```
+
+Crie a pasta `builds/` antes da exportação. O preset inclui os dados JSON, embute o pacote no executável e exclui documentação, testes e ferramentas. Inclua os avisos de licença do Godot na distribuição.
+
+### Estrutura do projeto
+
+```text
+assets/
+  concepts/               referências visuais originais
+  lab1/, lab2/, storage/   PNGs originais preservados
+  runtime/                imagens leves utilizadas no jogo
+data/rooms.json           salas, objetos, rotas e interações
+scenes/main.tscn          cena de entrada
+scripts/
+  main.gd                 sessão, interface e progressão
+  player.gd               movimento e furtividade
+  guard.gd                comportamento e percepção
+  character_art.gd        personagens e animações
+  interactable.gd         interações
+  pulse.gd                efeito de pulso
+tools/                    preparação de recursos e inicialização
+tests/                    verificações e captura de prévias
+docs/                     referências, inventário e validação
+export_presets.cfg        configuração da versão Windows
+```
+
+### Regenerar imagens leves
 
 ```powershell
 godot --headless --path . --script tools/prepare_assets.gd
 godot --headless --path . --editor --import
 ```
 
-Configure a variável `APPDATA` para uma pasta temporária ao testar se quiser isolar os dados do jogador. O teste de integração desativa a gravação de progresso.
+</details>
 
-## Escopo e próximos passos
+---
 
-Esta é uma reconstrução inicial baseada nas referências, não uma recuperação do código antigo. **Protocolo Azul** é um subtítulo provisório desta implementação. As posições, patrulhas e regras de detecção são novas decisões de prototipagem.
+## Equipe e origem
 
-Os pacotes fornecidos contêm cenários e objetos, mas não sprites de personagens, áudio nem projeto Godot. Gânia, guardas e cientistas usam desenhos vetoriais originais animados em código, com repouso, caminhada e orientação; Gânia também possui postura furtiva. Ao montar o dispositivo, um pulso transforma o cientista do setor em raposa e apresenta um desfecho. Essa sequência é uma interpretação nova da sinopse, não uma reprodução da cutscene do YouTube. Os efeitos de coleta, ruído e ativação são sintetizados no jogo.
+**RutherFox — Arcade Age**
 
-Os guardas investigam ruídos, perseguem Gânia, buscam a última posição vista e retornam à patrulha. Colisões impedem atravessar móveis; após bloquear-se, a patrulha troca o destino. Isso ainda não equivale a navegação por caminho ótimo. O cone é recortado pelos obstáculos. Próximos passos: revisar a fidelidade visual com os arquivos originais de personagens, adicionar diálogos e trilha, editar salas em cenas e calibrar dificuldade.
+| Integrante | Contribuição no projeto original |
+| :--- | :--- |
+| Ana Paula Marcello da Silva | Gestão, programação e planejamento |
+| Beatriz Karoline Cordeiro da Silva | Roteiro e planejamento |
+| Gabrielle Bocal Nalagaka | Arte 2D e animação |
+| Diana Imaizumi | Artes 2D e game design |
+| Matheus Erik Gonçalves | Programação |
 
-Referências, créditos e classificação dos materiais: [docs/REFERENCIAS.md](docs/REFERENCIAS.md). Consulte [docs/ASSETS.csv](docs/ASSETS.csv) para origem e integridade de cada PNG.
+Créditos registrados na [página original do RutherFox no itch.io](https://arcade-age.itch.io/rutherfox). A origem dos cenários e as referências audiovisuais estão documentadas em [REFERENCIAS.md](docs/REFERENCIAS.md).
 
-## Direitos e créditos
+### Direitos e uso dos materiais
 
-RutherFox e artes originais: Arcade Age e respectivos autores. Créditos confirmados na página do projeto estão nas referências. Não foi encontrada uma licença de redistribuição nos ZIPs: nenhuma licença aberta foi atribuída às artes. Antes de publicar os materiais, confirme as permissões com seus autores. Repositório público: https://github.com/SouBeatrizKaroline/Game_RutherFox.
+RutherFox e as artes originais pertencem à Arcade Age e aos respectivos autores. O repositório público não concede, por si só, licença aberta ou autorização para uso comercial dos materiais. O inventário disponível não apresenta uma licença de redistribuição das artes; acordos comerciais e reutilização por terceiros devem tratar essas permissões com os titulares.
 
+O pacote para Windows inclui os avisos de licença do **Godot Engine**, distribuído sob licença MIT.
+
+<div align="center">
+
+**Entre no laboratório. Descubra o que Gânia está disposta a fazer.**
+
+[**Baixar e jogar**](https://github.com/SouBeatrizKaroline/Game_RutherFox/releases/download/v0.2.1/RutherFox-Windows.zip) · [**Conhecer a versão**](https://github.com/SouBeatrizKaroline/Game_RutherFox/releases/tag/v0.2.1) · [**Enviar feedback**](https://github.com/SouBeatrizKaroline/Game_RutherFox/issues)
+
+</div>
