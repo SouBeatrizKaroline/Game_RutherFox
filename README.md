@@ -4,6 +4,14 @@ Uma nova base em **Godot 4.7.2 / GDScript** para o RutherFox, da Arcade Age. Pro
 
 Gânia é uma raposa azul e radioativa. Nesta primeira missão, explore três setores, encontre as peças de um dispositivo e monte-o sem ser capturada.
 
+## Baixar e jogar
+
+**[Baixar RutherFox para Windows 64 bits]( https://github.com/SouBeatrizKaroline/Game_RutherFox/releases/download/v0.2.1/RutherFox-Windows.zip )**
+
+Extraia todo o ZIP e abra **RutherFox.exe**. Não precisa instalar Godot; o jogo funciona sem internet.
+
+[Ver versão v0.2.1 e arquivos publicados](https://github.com/SouBeatrizKaroline/Game_RutherFox/releases/tag/v0.2.1).
+
 ## Imagens do jogo
 
 Capturas do protótipo rodando no Godot 4.7.2. Os cenários usam as artes originais fornecidas; Gânia, guardas e cientistas usam arte vetorial animada criada para esta reconstrução.
@@ -32,7 +40,7 @@ O setor final abriga o terminal de montagem do dispositivo.
 
 ## Abrir e jogar
 
-**Para jogar:** use o pacote de Windows exportado, extraia todo o ZIP e dê dois cliques em `RutherFox.exe`. O executável contém os dados do jogo e não precisa instalar Godot nem acessar a internet.
+**Para jogar:** [baixe o pacote para Windows](https://github.com/SouBeatrizKaroline/Game_RutherFox/releases/download/v0.2.1/RutherFox-Windows.zip), extraia todo o ZIP e dê dois cliques em `RutherFox.exe`. O executável contém os dados do jogo e não precisa instalar Godot nem acessar a internet.
 
 **Código-fonte deste repositório:** `Jogar.cmd` abre primeiro um executável exportado, se existir ao lado dele ou em `builds/`. Caso contrário, `tools/launch.ps1` prepara o projeto usando Godot local ou baixa automaticamente a versão oficial 4.7.2 na primeira abertura, verificando SHA-256. Importa os recursos antes de iniciar, guarda logs em `.runtime/logs` e mantém o aviso na tela quando ocorre um erro. Essa opção é para executar o projeto-fonte, diferente do pacote independente.
 
