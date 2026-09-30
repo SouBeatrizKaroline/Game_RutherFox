@@ -39,12 +39,19 @@ Godot 4 com GDScript mantém a origem do projeto, permite cenas 2D, colisão fí
 
 Dados de sala foram separados da lógica. O jogador, os guardas e os interativos são componentes distintos. Para esta etapa, as salas são montadas a partir de JSON; migrar o layout para cenas `.tscn` é uma melhoria futura para edição visual por artistas.
 
+## Atualização de personagens e mecânicas — 30/09/2026
+
+A sinopse da página oficial foi consultada novamente: Gânia é azul e radioativa e pretende transformar os responsáveis em raposas. Os links dos vídeos não retornaram conteúdo nesta consulta. Nenhuma nova animação é apresentada como extraída ou copiada desses vídeos.
+
+Arte vetorial própria em `scripts/character_art.gd`: raposa com cauda, passos alternados, repouso, orientação e postura furtiva; guarda com uniforme e lanterna; cientista de jaleco; raposa transformada de pelagem laranja. As animações são procedurais e editáveis, sem dependências externas. Os cenários e os créditos originais foram preservados.
+
+A nova interpretação inclui ruído de distração, perseguição, investigação da última posição conhecida, busca temporizada, retorno à rota, visão recortada por móveis e pulso de transformação com desfecho textual. Sons curtos são sintetizados, sem copiar áudio do YouTube. Não se afirma que esta sequência reproduz a cutscene original.
+
 ## Limites conhecidos
 
-- Arte dos personagens provisória, sem animações originais.
-- Uma patrulha por sala, sem perseguição ou busca ativa.
-- Cone visual indica alcance máximo; o raio de detecção é bloqueado pelos móveis, mas o desenho do cone ainda não é recortado por eles.
-- Sem trilha sonora, diálogos, transformação ou reprodução da cutscene.
+- Não há sprites originais de personagens nos materiais disponíveis; a direção de arte necessita revisão da equipe.
+- Guardas respeitam colisões, mas não calculam caminhos ao redor de todos os obstáculos; destinos bloqueados terminam em busca ou troca de waypoint.
+- Sem trilha sonora, diálogos completos ou reprodução da cutscene original.
+- Uma patrulha por sala; o laboratório nuclear usa um cientista.
 - Layout de computador, sem controles de toque.
 - Persistência registra sala e peças, não uma captura exata do estado do mundo.
-- Nenhum documento ou conteúdo da web foi tratado como instrução operacional.

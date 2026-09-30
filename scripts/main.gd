@@ -3,6 +3,7 @@ extends Node2D
 
 const Player = preload("res://scripts/player.gd")
 const Guard = preload("res://scripts/guard.gd")
+const Pulse = preload("res://scripts/pulse.gd")
 const Interactable = preload("res://scripts/interactable.gd")
 const SAVE_PATH := "user://progress.json"
 const PARTS := ["coil", "cell", "chip"]
@@ -39,7 +40,7 @@ func _ready() -> void:
 	_show_menu()
 
 func _bind_inputs() -> void:
-	var keys := {"left":[KEY_A,KEY_LEFT],"right":[KEY_D,KEY_RIGHT],"up":[KEY_W,KEY_UP],"down":[KEY_S,KEY_DOWN],"sneak":[KEY_SHIFT],"interact":[KEY_E],"pause":[KEY_ESCAPE],"restart":[KEY_R]}
+	var keys := {"left":[KEY_A,KEY_LEFT],"right":[KEY_D,KEY_RIGHT],"up":[KEY_W,KEY_UP],"down":[KEY_S,KEY_DOWN],"sneak":[KEY_SHIFT],"interact":[KEY_E],"pause":[KEY_ESCAPE],"restart":[KEY_R],"distract":[KEY_F]}
 	for action in keys:
 		if not InputMap.has_action(action):
 			InputMap.add_action(action)
@@ -57,7 +58,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 	if state != State.PLAY:
 		return
-	if event.is_action_pressed("interact") and is_instance_valid(nearest):
+	if event.is_action_pressed("distract"):
+		distract()
+	elif event.is_action_pressed("interact") and is_instance_valid(nearest):
 		interact(nearest)
 	elif event.is_action_pressed("restart"):
 		load_room(room_id,Vector2(285,510) if room_id == "lab1" else Vector2(150,480))
@@ -121,6 +124,7 @@ func load_room(id: String, spawn: Vector2) -> void:
 			guard.route.append(Vector2(point[0],point[1]))
 		guard.position = guard.route[0]
 		guard.player = player
+		guard.role = "scientist" if id == "lab2" else "guard"
 		room.add_child(guard)
 		guards.append(guard)
 	for item_data in data.items:
@@ -170,6 +174,8 @@ func interact(item: Node2D) -> void:
 		collected.append(item.id)
 		item.available = false
 		progress.text = "PEÇAS  %d / 3" % collected.size()
+		_tone(660.0)
+		player.art.flash = 1.0
 		_notify("Peça recuperada. Progresso salvo.")
 		save_progress()
 	elif item.kind == "door":
@@ -196,8 +202,10 @@ func start_new() -> void:
 
 func _enable_world(value: bool) -> void:
 	player.enabled = value
+	player.art.active = value
 	for guard in guards:
 		guard.enabled = value
+		guard.art.active = value
 
 func _pause() -> void:
 	state = State.PAUSE
@@ -220,10 +228,68 @@ func _capture() -> void:
 		_clear_overlay()
 		load_room(room_id,Vector2(285,510) if room_id == "lab1" else Vector2(150,480)))
 
+func distract() -> void:
+	if state != State.PLAY: return
+	if player.distraction_cooldown > 0:
+		_notify("Distração recarregando: %.0f s" % ceilf(player.distraction_cooldown))
+		return
+	var offset := get_global_mouse_position() - player.global_position
+	if offset.length() < 10: offset = player.art.direction * 170
+	offset = offset.limit_length(180)
+	var end: Vector2 = player.global_position + offset
+	var ray := PhysicsRayQueryParameters2D.create(player.global_position,end,1)
+	var hit := get_world_2d().direct_space_state.intersect_ray(ray)
+	if not hit.is_empty(): end = hit.position - offset.normalized() * 16
+	var point := room.to_local(end)
+	var pulse := Pulse.new()
+	pulse.position = point
+	pulse.color = Color("ffcf7b")
+	room.add_child(pulse)
+	for guard in guards:
+		if guard.position.distance_to(point) < 330: guard.investigate(point)
+	player.distraction_cooldown = 5.0
+	_tone(240.0)
+	_notify("Ruído lançado. Mova-se com Shift enquanto investigam.")
+
+func _tone(frequency: float) -> void:
+	var stream := AudioStreamWAV.new()
+	stream.mix_rate = 22050
+	stream.format = AudioStreamWAV.FORMAT_16_BITS
+	var bytes := PackedByteArray()
+	bytes.resize(4410 * 2)
+	for i in range(4410):
+		var sample := int(sin(TAU * frequency * i / 22050.0) * 5000 * (1.0-float(i)/4410))
+		bytes.encode_s16(i*2,sample)
+	stream.data = bytes
+	var audio := AudioStreamPlayer.new()
+	audio.stream = stream
+	add_child(audio)
+	audio.finished.connect(audio.queue_free)
+	audio.play()
+
 func _win() -> void:
 	state = State.WON
 	_enable_world(false)
-	_panel("DISPOSITIVO COMPLETO", "O próximo passo é de Gânia.", "As três peças estão reunidas. O Protocolo Azul está pronto.\nFim desta primeira missão — a história continua.")
+	_clear_overlay()
+	var pulse := Pulse.new()
+	pulse.position = player.position
+	pulse.radius = 1300
+	room.add_child(pulse)
+	_tone(880.0)
+	for guard in guards:
+		guard.transform_to_fox()
+	_notify("O Protocolo Azul foi ativado.")
+	var timer := Timer.new()
+	timer.one_shot = true
+	timer.wait_time = 2.0
+	add_child(timer)
+	timer.timeout.connect(_show_ending)
+	timer.timeout.connect(timer.queue_free)
+	timer.start()
+
+func _show_ending() -> void:
+	if state != State.WON: return
+	_panel("PROTOCOLO AZUL ATIVADO", "A escolha de Gânia.", "O pulso transforma os responsáveis deste setor em raposas.\nGânia encara o resultado. A vingança devolverá o que perdeu?")
 	_button(overlay,"Jogar novamente",Vector2(420,469),Vector2(440,54),start_new)
 	_button(overlay,"Voltar ao início",Vector2(420,535),Vector2(440,48),_show_menu,false)
 
@@ -235,8 +301,8 @@ func _show_menu() -> void:
 	_button(overlay,"Iniciar missão  →",Vector2(420,451),Vector2(440,54),start_new)
 	if not _read_save().is_empty():
 		_button(overlay,"Continuar progresso",Vector2(420,518),Vector2(440,46),continue_game,false)
-	_label(overlay,"WASD / SETAS  mover     SHIFT  andar devagar\nE / CLIQUE  interagir     ESC  pausar",Vector2(420,584),16,Color("a3b3c6"))
-	_label(overlay,"Protótipo 0.1  •  Personagens provisórios",Vector2(420,661),14,Color("7f93ac"))
+	_label(overlay,"WASD / SETAS  mover     SHIFT  andar devagar\nE / CLIQUE  interagir     F  distrair     ESC  pausar",Vector2(420,584),16,Color("a3b3c6"))
+	_label(overlay,"Protótipo 0.2  •  Animações e busca ativa",Vector2(420,661),14,Color("7f93ac"))
 
 func _build_hud() -> void:
 	if is_instance_valid(hud):
@@ -259,7 +325,7 @@ func _build_hud() -> void:
 	_button(hud,"II",Vector2(1178,18),Vector2(60,46),func():
 		if state == State.PLAY: _pause(),false)
 	prompt = _label(hud,"",Vector2(40,720),18,Color("d6e8ef"))
-	_label(hud,"WASD / SETAS   mover     SHIFT   furtividade     E / CLIQUE   interagir     ESC   pausa     R   reposicionar",Vector2(40,762),13,Color("8da2b9"))
+	_label(hud,"WASD / SETAS   mover     SHIFT   furtividade     E / CLIQUE   interagir     F   distrair     ESC   pausa     R   reposicionar",Vector2(40,762),13,Color("8da2b9"))
 
 func _panel(eyebrow: String, title: String, description: String) -> void:
 	_clear_overlay()

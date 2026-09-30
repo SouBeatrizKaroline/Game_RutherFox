@@ -23,3 +23,12 @@ O ambiente restrito emitiu um aviso ao ler o repositório de certificados do Win
 Os 33 PNGs originais foram comparados byte a byte com os ZIPs e tiveram sua integridade confirmada. O inventário registra dimensões e SHA-256.
 
 GitHub: publicado como público em https://github.com/SouBeatrizKaroline/Game_RutherFox, branch main, com autoria dos commits vinculada à conta SouBeatrizKaroline.
+
+## Personagens e mecânicas — versão 0.2, 30/09/2026
+
+- Godot 4.7.2: 16 verificações da missão e 9 verificações de personagens/IA aprovadas, zero falhas nos dois testes.
+- Testes novos: chegada ao ruído, busca e retorno, recarga, bloqueio de repetição, pausa de animação/recarga, colisão do guarda, cientista, transformação sem detecção e tela de desfecho.
+- Menu e três salas renderizados e inspecionados; capturas atualizadas.
+- Dados temporários isolados do progresso real. O ambiente emite erro de leitura dos certificados do Windows, sem falhas no jogo offline.
+- A migração de 4.4.1 não foi repetida nesta etapa. O teste específico de migração depende de fixture criada pela engine anterior; a persistência da versão atual passou no teste da missão.
+- Novas artes e efeitos sintetizados em código. Ainda é necessária validação artística da equipe e uma sessão de balanceamento com jogadores.

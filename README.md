@@ -6,7 +6,7 @@ Gânia é uma raposa azul e radioativa. Nesta primeira missão, explore três se
 
 ## Imagens do jogo
 
-Capturas do protótipo rodando no Godot 4.7.2. Os cenários usam as artes originais fornecidas; os personagens ainda são provisórios.
+Capturas do protótipo rodando no Godot 4.7.2. Os cenários usam as artes originais fornecidas; Gânia, guardas e cientistas usam arte vetorial animada criada para esta reconstrução.
 
 ### Menu inicial
 
@@ -45,6 +45,7 @@ As imagens leves já estão incluídas. Os arquivos originais não são necessá
 | Mover | WASD ou setas |
 | Andar devagar / reduzir distância de detecção | Shift |
 | Interagir | E, ou clique no objeto quando estiver perto |
+| Distrair patrulha com ruído na direção do mouse | F (recarga de 5 s; alcance de 180 px) |
 | Pausar / continuar | Esc |
 | Reposicionar na entrada da sala | R |
 
@@ -60,7 +61,10 @@ O progresso é salvo localmente ao coletar peças e trocar de sala. **Continuar 
 - Patrulha, cone de visão, obstrução por móveis e medidor de detecção.
 - Interação por proximidade, inventário de três peças e terminal condicionado à coleta.
 - Progresso local versionado e validado antes de carregar.
-- Teste de integração que percorre as principais regras da missão.
+- Personagens animados, cientista no setor nuclear e transformação após ativação.
+- Distração por ruído com recarga, busca ativa e cones recortados pelos móveis.
+- Efeitos sonoros de coleta, distração e pulso sintetizados localmente.
+- Testes de integração das regras da missão e das novas mecânicas.
 
 ## Organização
 
@@ -72,8 +76,8 @@ assets/
 data/rooms.json         cenários, objetos, colisões, patrulhas e interações
 scenes/main.tscn        cena de entrada
 scripts/main.gd         sessão, progressão e interface
-scripts/player.gd       movimento e personagem provisório
-scripts/guard.gd        patrulha e percepção
+scripts/player.gd       movimento, furtividade e recarga
+scripts/guard.gd        patrulha, perseguição, investigação e busca
 scripts/interactable.gd indicadores de interação
 tools/prepare_assets.gd preparação reproduzível das imagens
 tests/                  validação e captura de prévias
@@ -87,6 +91,7 @@ Compatibilidade validada no Godot **4.7.2**, renderizador Compatibility. Não us
 ```powershell
 godot --headless --path . --editor --import
 godot --headless --path . --script tests/smoke.gd
+godot --headless --path . --script tests/characters_ai.gd
 ```
 
 Para regenerar as imagens leves, mantendo os originais:
@@ -102,9 +107,9 @@ Configure a variável `APPDATA` para uma pasta temporária ao testar se quiser i
 
 Esta é uma reconstrução inicial baseada nas referências, não uma recuperação do código antigo. **Protocolo Azul** é um subtítulo provisório desta implementação. As posições, patrulhas e regras de detecção são novas decisões de prototipagem.
 
-Os pacotes fornecidos contêm cenários e objetos, mas não sprites de personagens, áudio nem projeto Godot. Raposa e guarda usam desenhos vetoriais provisórios. A primeira missão termina na montagem do dispositivo; a transformação dos responsáveis, diálogos e cutscenes não foram recriados.
+Os pacotes fornecidos contêm cenários e objetos, mas não sprites de personagens, áudio nem projeto Godot. Gânia, guardas e cientistas usam desenhos vetoriais originais animados em código, com repouso, caminhada e orientação; Gânia também possui postura furtiva. Ao montar o dispositivo, um pulso transforma o cientista do setor em raposa e apresenta um desfecho. Essa sequência é uma interpretação nova da sinopse, não uma reprodução da cutscene do YouTube. Os efeitos de coleta, ruído e ativação são sintetizados no jogo.
 
-Próximos passos sugeridos: incorporar animações originais; transformar cada sala em cena editável; ampliar IA com investigação e retorno à patrulha; incluir áudio; calibrar dificuldade; adaptar UI para outros tamanhos; implementar a continuação narrativa.
+Os guardas investigam ruídos, perseguem Gânia, buscam a última posição vista e retornam à patrulha. Colisões impedem atravessar móveis; após bloquear-se, a patrulha troca o destino. Isso ainda não equivale a navegação por caminho ótimo. O cone é recortado pelos obstáculos. Próximos passos: revisar a fidelidade visual com os arquivos originais de personagens, adicionar diálogos e trilha, editar salas em cenas e calibrar dificuldade.
 
 Referências, créditos e classificação dos materiais: [docs/REFERENCIAS.md](docs/REFERENCIAS.md). Consulte [docs/ASSETS.csv](docs/ASSETS.csv) para origem e integridade de cada PNG.
 

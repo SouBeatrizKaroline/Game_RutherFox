@@ -5,8 +5,8 @@ if defined GODOT_BIN (
   "%GODOT_BIN%" --path "%~dp0."
   exit /b
 )
-if exist "%~dp0..\..\work\godot-4.7.2\Godot_v4.7.2-stable_win64.exe" (
-  start "RutherFox" "%~dp0..\..\work\godot-4.7.2\Godot_v4.7.2-stable_win64.exe" --path "%~dp0."
+if exist "%~dp0..\godot\Godot_v4.7.2-stable_win64.exe" (
+  start "RutherFox" "%~dp0..\godot\Godot_v4.7.2-stable_win64.exe" --path "%~dp0."
   exit /b
 )
 where godot >nul 2>nul
