@@ -6,6 +6,7 @@ func _initialize() -> void:
 func capture() -> void:
 	var game = load("res://scenes/main.tscn").instantiate()
 	game.save_enabled = false
+	game.save_path = "res://.runtime/preview-%d.json" % OS.get_process_id()
 	root.add_child(game)
 	await process_frame
 	await RenderingServer.frame_post_draw
@@ -20,4 +21,3 @@ func capture() -> void:
 		await RenderingServer.frame_post_draw
 		root.get_texture().get_image().save_png("res://docs/" + id + ".png")
 	quit()
-

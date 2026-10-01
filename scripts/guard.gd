@@ -19,6 +19,10 @@ var role := "guard"
 var transformed := false
 var art: Node2D
 var cone := PackedVector2Array()
+var navigation: RefCounted
+var path := PackedVector2Array()
+var path_target := Vector2(INF, INF)
+var path_time := 0.0
 
 func _ready() -> void:
 	collision_layer = 4
@@ -52,6 +56,7 @@ func _physics_process(delta: float) -> void:
 	sees_player = false
 	art.active = enabled
 	if not enabled or transformed or route.size() < 2:
+		velocity = Vector2.ZERO
 		art.moving = false
 		return
 	var radius := vision_range * (0.72 if player.sneaking else 1.0)
@@ -73,6 +78,7 @@ func _physics_process(delta: float) -> void:
 		if mode == Mode.PATROL or mode == Mode.RETURN:
 			mode = Mode.PATROL
 			waypoint = (waypoint + 1) % route.size()
+			target = route[waypoint]
 		else:
 			mode = Mode.SEARCH
 			search_time = 2.5
@@ -82,8 +88,17 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 		if search_time <= 0: _return_to_route()
 	else:
-		if offset.length() > 1: facing = offset.normalized()
-		velocity = facing * speed * (1.65 if mode == Mode.CHASE else 1.0)
+		path_time -= delta
+		if navigation and (target.distance_to(path_target) > 10 or path_time <= 0):
+			path = navigation.find_path(position, target)
+			path_target = target
+			path_time = 0.3
+		while not path.is_empty() and position.distance_to(path[0]) < 3:
+			path.remove_at(0)
+		var movement := (path[0] - position) if not path.is_empty() else (target - position if not navigation else Vector2.ZERO)
+		if movement.length() > 0.1 and speed > 0: facing = movement.normalized()
+		var step_speed := speed * (1.65 if mode == Mode.CHASE else 1.0)
+		velocity = movement.normalized() * minf(step_speed, movement.length() / delta)
 		var before := position
 		move_and_slide()
 		stuck_time = stuck_time + delta if position.distance_to(before) < 0.1 and speed > 0 else 0.0
@@ -95,7 +110,7 @@ func _physics_process(delta: float) -> void:
 				search_time = 2.5
 			stuck_time = 0
 	art.direction = facing
-	art.moving = velocity.length() > 1
+	art.moving = get_real_velocity().length() > 1
 	art.alert = sees_player or mode != Mode.PATROL
 	_update_cone()
 	queue_redraw()
