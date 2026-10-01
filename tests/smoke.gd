@@ -20,8 +20,10 @@ func item(id: String) -> Node2D:
 	return null
 
 func run() -> void:
+	DirAccess.make_dir_recursive_absolute("res://.runtime")
 	game = load("res://scenes/main.tscn").instantiate()
 	game.save_enabled = false
+	game.save_path = "res://.runtime/smoke-%d.json" % OS.get_process_id()
 	root.add_child(game)
 	await process_frame
 	check(game.state == game.State.MENU,"Menu inicial")
@@ -83,7 +85,6 @@ func run() -> void:
 	game.player.position = item("device").position
 	game.interact(item("device"))
 	check(game.state == game.State.WON and game.collected.size() == 3,"Missão completa nas três salas")
-	game.save_path = "user://smoke-%d.json" % OS.get_process_id()
 	game.save_enabled = true
 	game.save_progress()
 	game.collected.clear()

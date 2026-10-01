@@ -3,6 +3,7 @@ extends Node2D
 
 const Player = preload("res://scripts/player.gd")
 const Guard = preload("res://scripts/guard.gd")
+const Navigation = preload("res://scripts/navigation.gd")
 const Pulse = preload("res://scripts/pulse.gd")
 const Interactable = preload("res://scripts/interactable.gd")
 const SAVE_PATH := "user://progress.json"
@@ -78,7 +79,7 @@ func _process(delta: float) -> void:
 	for item in items:
 		item.nearby = false
 		var distance: float = item.position.distance_to(player.position)
-		if item.available and distance < shortest:
+		if item.available and distance <= shortest and _can_reach(item):
 			shortest = distance
 			nearest = item
 	if is_instance_valid(nearest):
@@ -95,6 +96,7 @@ func _process(delta: float) -> void:
 		_capture()
 
 func load_room(id: String, spawn: Vector2) -> void:
+	var cooldown: float = player.distraction_cooldown if is_instance_valid(player) else 0.0
 	if is_instance_valid(room):
 		remove_child(room)
 		room.queue_free()
@@ -102,11 +104,15 @@ func load_room(id: String, spawn: Vector2) -> void:
 	items.clear()
 	nearest = null
 	suspicion = 0
+	message = ""
+	message_time = 0.0
 	room_id = id
 	room = Node2D.new()
 	room.position = Vector2(40,102)
 	add_child(room)
 	var data: Dictionary = rooms[id]
+	var navigation := Navigation.new()
+	navigation.build(data.props)
 	_sprite(data.background,Rect2(0,0,1200,600),Color("a6b7ce"))
 	_solid(Rect2(0,0,1200,65))
 	_solid(Rect2(0,0,30,600))
@@ -116,6 +122,7 @@ func load_room(id: String, spawn: Vector2) -> void:
 		_sprite(prop.asset,_rect(prop.rect))
 		_solid(_rect(prop.solid))
 	player = Player.new()
+	player.distraction_cooldown = cooldown
 	player.position = spawn
 	room.add_child(player)
 	for route_data in data.guards:
@@ -124,6 +131,7 @@ func load_room(id: String, spawn: Vector2) -> void:
 			guard.route.append(Vector2(point[0],point[1]))
 		guard.position = guard.route[0]
 		guard.player = player
+		guard.navigation = navigation
 		guard.role = "scientist" if id == "lab2" else "guard"
 		room.add_child(guard)
 		guards.append(guard)
@@ -164,11 +172,18 @@ func _solid(rect: Rect2) -> void:
 	body.add_child(collider)
 	room.add_child(body)
 
+func _can_reach(item: Node2D) -> bool:
+	var ray := PhysicsRayQueryParameters2D.create(player.global_position, item.global_position, 1)
+	return get_world_2d().direct_space_state.intersect_ray(ray).is_empty()
+
 func interact(item: Node2D) -> void:
-	if state != State.PLAY or not item.available:
+	if state != State.PLAY or not is_instance_valid(item) or not items.has(item) or not item.available:
 		return
 	if player.position.distance_to(item.position) > 72:
 		_notify("Aproxime-se do objeto para interagir.")
+		return
+	if not _can_reach(item):
+		_notify("Contorne o obstáculo para alcançar o objeto.")
 		return
 	if item.kind == "part":
 		collected.append(item.id)
@@ -176,13 +191,17 @@ func interact(item: Node2D) -> void:
 		progress.text = "PEÇAS  %d / 3" % collected.size()
 		_tone(660.0)
 		player.art.flash = 1.0
-		_notify("Peça recuperada. Progresso salvo.")
-		save_progress()
+		var saved := save_progress()
+		var notice := "Peça recuperada."
+		if save_enabled:
+			notice += " Progresso salvo." if saved else " Não foi possível salvar o progresso."
+		_notify(notice)
 	elif item.kind == "door":
 		var destination: String = item.destination
 		var moving_right: bool = item.position.x > 600
 		load_room(destination,Vector2(150 if moving_right else 1040,480))
-		save_progress()
+		if save_enabled and not save_progress():
+			_notify("Não foi possível salvar o progresso deste setor.")
 	elif item.kind == "terminal":
 		if collected.size() < 3:
 			_notify("Faltam %d peça(s). Explore os três setores." % (3-collected.size()))
@@ -195,12 +214,16 @@ func _notify(text: String) -> void:
 
 func start_new() -> void:
 	collected.clear()
+	if is_instance_valid(player):
+		player.distraction_cooldown = 0.0
 	state = State.PLAY
 	_clear_overlay()
 	load_room("lab1",Vector2(285,510))
-	save_progress()
+	if save_enabled and not save_progress():
+		_notify("Não foi possível salvar a nova missão.")
 
 func _enable_world(value: bool) -> void:
+	room.process_mode = Node.PROCESS_MODE_INHERIT if value else Node.PROCESS_MODE_DISABLED
 	player.enabled = value
 	player.art.active = value
 	for guard in guards:
@@ -270,6 +293,8 @@ func _tone(frequency: float) -> void:
 func _win() -> void:
 	state = State.WON
 	_enable_world(false)
+	# O desfecho continua animado, sem movimento ou percepção dos personagens.
+	room.process_mode = Node.PROCESS_MODE_INHERIT
 	_clear_overlay()
 	var pulse := Pulse.new()
 	pulse.position = player.position
@@ -393,22 +418,43 @@ func _button(parent: Node, text: String, at: Vector2, dimensions: Vector2, callb
 	button.add_theme_stylebox_override("focus",hover)
 	button.pressed.connect(callback)
 	parent.add_child(button)
+	if parent == hud:
+		button.focus_mode = Control.FOCUS_NONE
 	if parent == overlay:
 		overlay_buttons.append(button)
 		if overlay_buttons.size() == 1:
 			button.grab_focus()
 
-func save_progress() -> void:
+func save_progress() -> bool:
 	if not save_enabled:
-		return
-	var file := FileAccess.open(save_path,FileAccess.WRITE)
-	if file:
-		file.store_string(JSON.stringify({"version":1,"room":room_id,"parts":collected}))
+		return false
+	# Escreve ao lado do save antes de substituí-lo, preservando o anterior em falhas.
+	var temporary_path := save_path + ".tmp"
+	var file := FileAccess.open(temporary_path,FileAccess.WRITE)
+	if not file:
+		return false
+	file.store_string(JSON.stringify({"version":1,"room":room_id,"parts":collected}))
+	file.flush()
+	var error := file.get_error()
+	file.close()
+	if error != OK:
+		DirAccess.remove_absolute(temporary_path)
+		return false
+	if DirAccess.rename_absolute(temporary_path, save_path) != OK:
+		DirAccess.remove_absolute(temporary_path)
+		return false
+	return true
 
 func _read_save() -> Dictionary:
 	if not FileAccess.file_exists(save_path):
 		return {}
-	var value: Variant = JSON.parse_string(FileAccess.get_file_as_string(save_path))
+	var file := FileAccess.open(save_path, FileAccess.READ)
+	if not file:
+		return {}
+	var json := JSON.new()
+	if json.parse(file.get_as_text()) != OK:
+		return {}
+	var value: Variant = json.data
 	if not value is Dictionary or value.get("version") != 1 or not rooms.has(value.get("room", "")) or not value.get("parts") is Array:
 		return {}
 	for part in value.parts:

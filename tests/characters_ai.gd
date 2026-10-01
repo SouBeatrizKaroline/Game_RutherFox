@@ -8,6 +8,7 @@ func check(value: bool, label: String) -> void:
 func run() -> void:
 	var game = load("res://scenes/main.tscn").instantiate()
 	game.save_enabled = false
+	game.save_path = "res://.runtime/characters-%d.json" % OS.get_process_id()
 	root.add_child(game)
 	await process_frame
 	game.start_new()

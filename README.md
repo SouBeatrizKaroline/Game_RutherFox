@@ -59,7 +59,7 @@ O executável já contém os arquivos do jogo. A internet é necessária apenas 
 | Recurso | O que você encontra no jogo |
 | :--- | :--- |
 | **Furtividade com leitura visual** | Cones de visão e barra de alerta ajudam a reconhecer o risco. Móveis bloqueiam o movimento e a visão. |
-| **Patrulhas reativas** | Guardas perseguem Gânia, investigam ruídos, procuram na última posição vista e retornam à rota. |
+| **Patrulhas reativas** | Guardas perseguem Gânia, contornam móveis, investigam ruídos, procuram na última posição vista e retornam à rota. |
 | **Distração por ruído** | Lance um ruído na direção do mouse e aproveite a investigação para mudar de posição. |
 | **Três setores conectados** | Pesquisa, depósito e laboratório nuclear compõem a missão atual. |
 | **Personagens animados** | Gânia tem repouso, movimento, orientação e postura furtiva; guardas e cientista também são animados. |
@@ -170,13 +170,13 @@ Essas frentes são **direções de desenvolvimento**, sem datas ou compromissos 
 
 ### Qualidade e estágio atual
 
-**25 verificações aprovadas no projeto-fonte:** 16 sobre o fluxo da missão e 9 sobre personagens e IA. Cobrem movimento, colisões, coleta, captura, transições, persistência, investigação, recarga, pausa e transformação.
+**51 verificações aprovadas no projeto-fonte:** 16 sobre o fluxo da missão, 9 sobre personagens e IA e 26 regressões de QA. Cobrem movimento, colisões, coleta, captura, transições, persistência, investigação, recarga, pausa, transformação, caminhos ao redor dos móveis, interação bloqueada por cobertura e falhas de salvamento. [Relatório de QA de 01/10/2026 →](docs/QA_2026-10-01.md)
 
 A versão exportada foi aberta separadamente do editor e do projeto-fonte; o menu foi renderizado e inspecionado. O pacote publicado foi baixado novamente e comparado ao arquivo testado.
 
 **Limitações relevantes para avaliação:**
 
-- Guardas respeitam colisões, mas ainda não calculam caminhos completos ao redor de todos os obstáculos.
+- A navegação das patrulhas usa uma grade com folga para o colisor e os obstáculos estáticos de cada sala. Obstáculos dinâmicos e mapas maiores ainda precisam de validação específica.
 - Há uma patrulha por sala; o laboratório nuclear apresenta um cientista.
 - Diálogos completos, trilha sonora e controles de toque ainda não estão implementados.
 - As novas artes de personagens e o desfecho são interpretações desta reconstrução; não reproduzem sprites ou a cutscene original.
@@ -201,9 +201,10 @@ O `Jogar.cmd` do repositório procura um executável exportado ao lado dele ou e
 godot --headless --path . --editor --import
 godot --headless --path . --script tests/smoke.gd
 godot --headless --path . --script tests/characters_ai.gd
+godot --headless --path . --script tests/qa_regressions.gd
 ```
 
-Use um diretório temporário de `APPDATA` ao testar para isolar dados do jogador. O teste da missão desativa a gravação do progresso normal.
+Os testes de missão, personagens/IA e regressões usam caminhos exclusivos em `.runtime/`, sem ler ou gravar o progresso normal do jogador. O teste de compatibilidade entre engines ainda requer um diretório de dados temporário separado.
 
 ### Exportar para Windows
 
@@ -228,6 +229,7 @@ scripts/
   main.gd                 sessão, interface e progressão
   player.gd               movimento e furtividade
   guard.gd                comportamento e percepção
+  navigation.gd           caminhos com folga ao redor dos obstáculos
   character_art.gd        personagens e animações
   interactable.gd         interações
   pulse.gd                efeito de pulso
